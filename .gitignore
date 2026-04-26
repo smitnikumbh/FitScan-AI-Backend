@@ -3,6 +3,7 @@ node_modules/
 
 # Environment variables (SECRET FILE)
 .env
+serviceAccountKey.json
 
 # Logs
 logs/
