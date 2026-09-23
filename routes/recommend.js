@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { generateWithRetry } = require("../utils/geminiRetry");
 const admin = require("firebase-admin");
 require("dotenv").config();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
@@ -44,8 +45,8 @@ router.post("/", async (req, res) => {
     const profile = userDoc.data();
 
     // Call Gemini
-    const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
-    const result = await model.generateContent(buildRecommendPrompt(profile));
+    const model = genAI.getGenerativeModel({ model: "gemini-3.6-flash" });
+    const result = await generateWithRetry(model, buildRecommendPrompt(profile));
     const text = result.response.text();
 
     const jsonMatch = text.match(/\{[\s\S]*\}/);

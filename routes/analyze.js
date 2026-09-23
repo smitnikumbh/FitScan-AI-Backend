@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { generateWithRetry } = require("../utils/geminiRetry");
 
 require("dotenv").config();
 // Init Gemini
@@ -40,11 +41,11 @@ router.post("/", async (req, res) => {
     const prompt = buildPrompt(profile);
 
     // Call Gemini Vision
-    const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
+    const model = genAI.getGenerativeModel({ model: "gemini-3.6-flash" });
 
     const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
 
-    const result = await model.generateContent([
+    const result = await generateWithRetry(model, [
       {
         inlineData: {
           mimeType: "image/jpeg",

@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const analyzeRoute = require("./routes/analyze");
 const recommendRoute = require("./routes/recommend");
+const foodPhotoRoute = require("./routes/foodPhoto");
 
 const app = express();
 app.use(cors());
@@ -25,6 +26,7 @@ app.delete("/api/recommend/cache/:uid", async (req, res) => {
 
 // ← Baad mein recommend route
 app.use("/api/recommend", recommendRoute);
+app.use("/api/food", foodPhotoRoute);
 
 app.get("/", (req, res) => res.send("FitScan AI Backend Running 🚀"));
 
