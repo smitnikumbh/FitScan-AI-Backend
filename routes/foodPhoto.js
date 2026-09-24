@@ -35,7 +35,7 @@ router.post("/photo-log", async (req, res) => {
       return res.status(403).json({ error: "Photo meal logging is a premium feature." });
     }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
+    const model = genAI.getGenerativeModel({ model: "gemini-3.6-flash" });
     const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
 
     const prompt = `You are a nutrition expert. Identify the food/meal in this image and estimate its nutritional content for the visible portion.
